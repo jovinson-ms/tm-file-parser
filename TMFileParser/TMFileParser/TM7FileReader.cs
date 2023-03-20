@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
 using TMFileParser.Models.output;
+using System.Reflection.Metadata;
 
 namespace TMFileParser
 {
@@ -88,6 +89,11 @@ namespace TMFileParser
                     if (border.value.type.ToLower() == "BorderBoundary".ToLower() || border.value.type.ToLower() == "LineBoundary".ToLower())
                     {
                         var boundary = new TM7Boundary();
+                        boundary.Id = border.key;
+                        boundary.Height = border.value.height;
+                        boundary.Left = border.value.left;
+                        boundary.Top = border.value.top;
+                        boundary.Width = border.value.width;
                         boundary.Name = border.value.properties.anyType
                             .Where(x => x.type == "HeaderDisplayAttribute").FirstOrDefault()?.DisplayName;
                         boundary.DisplayName = border.value.properties.anyType
@@ -97,6 +103,11 @@ namespace TMFileParser
                     else
                     {
                         var asset = new TM7Asset();
+                        asset.Id = border.key;
+                        asset.Height = border.value.height;
+                        asset.Left = border.value.left;
+                        asset.Top = border.value.top;
+                        asset.Width = border.value.width;
                         asset.Name = border.value.properties.anyType
                             .Where(x => x.type == "HeaderDisplayAttribute").FirstOrDefault()?.DisplayName;
                         asset.DisplayName = border.value.properties.anyType
@@ -110,6 +121,7 @@ namespace TMFileParser
                     if (line.value.type.ToLower() == "BorderBoundary".ToLower() || line.value.type.ToLower() == "LineBoundary".ToLower())
                     {
                         var boundary = new TM7Boundary();
+                        boundary.Id = line.key;
                         boundary.Name = line.value.properties.anyType
                             .Where(x => x.type == "HeaderDisplayAttribute").FirstOrDefault()?.DisplayName;
                         boundary.DisplayName = line.value.properties.anyType
@@ -119,6 +131,9 @@ namespace TMFileParser
                     else if (line.value.type.ToLower() == "Connector".ToLower())
                     {
                         var connector = new TM7Connector();
+                        connector.Id = line.key;
+                        connector.SourceId = line.value.sourceGuid;
+                        connector.TargetId = line.value.targetGuid;
                         connector.Name = line.value.properties.anyType
                             .Where(x => x.type == "HeaderDisplayAttribute").FirstOrDefault()?.DisplayName;
                         connector.DisplayName = line.value.properties.anyType
@@ -128,6 +143,7 @@ namespace TMFileParser
                     else
                     {
                         var asset = new TM7Asset();
+                        asset.Id = line.key;
                         asset.Name = line.value.properties.anyType
                             .Where(x => x.type == "HeaderDisplayAttribute").FirstOrDefault()?.DisplayName;
                         asset.DisplayName = line.value.properties.anyType

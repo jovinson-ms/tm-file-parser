@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TMFileParser.Models.output
 {
     [ExcludeFromCodeCoverage]
     public class TM7Connector
     {
+        public string Id { get; set; }
+        public string SourceId { get; set; }
+        public string TargetId { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
     }
