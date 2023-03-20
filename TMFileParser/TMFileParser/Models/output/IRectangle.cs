@@ -1,7 +1,4 @@
-﻿using System.Net;
-using System.Runtime.CompilerServices;
-
-namespace TMFileParser.Models.output
+﻿namespace TMFileParser.Models.output
 {
     public interface IRectangle
     {
