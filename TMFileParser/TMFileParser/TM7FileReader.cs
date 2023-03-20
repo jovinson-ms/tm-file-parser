@@ -47,29 +47,29 @@ namespace TMFileParser
             foreach(TM7KeyValueOfstringThreatpc_P0_PhOB threatInstance in _tmRawData.threatInstances.keyValueOfstringThreatpc_P0_PhOB)
             {
                 var threat = new TM7Threat();
-                threat.id = threatInstance.value.id;
-                threat.diagram = this._tmRawData.drawingSurfaceList.drawingSurfaceModel
+                threat.Id = threatInstance.value.id;
+                threat.Diagram = this._tmRawData.drawingSurfaceList.drawingSurfaceModel
                     .Where(x => x.guid == threatInstance.value.drawingSurfaceGuid).FirstOrDefault()?
                     .properties.anyType.Where(d => d.type == "StringDisplayAttribute" && d.DisplayName == "Name")
                     .FirstOrDefault()?.value.value;
-                threat.changedBy = threatInstance.value.changedBy;
-                threat.lastModified = threatInstance.value.ModifiedAt;
-                threat.title = threatInstance.value.properties.keyValueOfstringstring
+                threat.ChangedBy = threatInstance.value.changedBy;
+                threat.LastModified = threatInstance.value.ModifiedAt;
+                threat.Title = threatInstance.value.properties.keyValueOfstringstring
                     .Where(x => x.key == "Title").FirstOrDefault()?.value; 
-                threat.category = threatInstance.value.properties.keyValueOfstringstring
+                threat.Category = threatInstance.value.properties.keyValueOfstringstring
                      .Where(x => x.key == "UserThreatCategory").FirstOrDefault()?.value;
-                threat.description = threatInstance.value.properties.keyValueOfstringstring
+                threat.Description = threatInstance.value.properties.keyValueOfstringstring
                     .Where(x => x.key == "UserThreatDescription").FirstOrDefault()?.value;
-                threat.justifications = threatInstance.value.properties.keyValueOfstringstring
+                threat.Justifications = threatInstance.value.properties.keyValueOfstringstring
                     .Where(x => x.key == "StateInformation").FirstOrDefault()?.value; 
-                threat.interaction = threatInstance.value.properties.keyValueOfstringstring
+                threat.Interaction = threatInstance.value.properties.keyValueOfstringstring
                      .Where(x => x.key == "InteractionString").FirstOrDefault()?.value;
-                threat.priority = threatInstance.value.properties.keyValueOfstringstring
+                threat.Priority = threatInstance.value.properties.keyValueOfstringstring
                     .Where(x => x.key == "Priority").FirstOrDefault()?.value;
 
                 threats.Add(threat);
             }
-            this._tmAllData.threats = threats;
+            this._tmAllData.Threats = threats;
         }
 
         private void ReadDiagramElements()
@@ -78,7 +78,7 @@ namespace TMFileParser
             foreach (TM7DrawingSurfaceModel model in this._tmRawData.drawingSurfaceList.drawingSurfaceModel)
             {
                 var diagram = new TM7Diagram();
-                diagram.diagram = model.properties.anyType.Where(d => d.type == "StringDisplayAttribute" && d.DisplayName == "Name")
+                diagram.Diagram = model.properties.anyType.Where(d => d.type == "StringDisplayAttribute" && d.DisplayName == "Name")
                     .FirstOrDefault()?.value.value;
                 var boundaries = new List<TM7Boundary>();
                 var connectors = new List<TM7Connector>();
@@ -151,11 +151,11 @@ namespace TMFileParser
                         assets.Add(asset);
                     }
                 }
-                diagram.boundaries = boundaries;
-                diagram.connectors = connectors;
-                diagram.assets = assets;
+                diagram.Boundaries = boundaries;
+                diagram.Connectors = connectors;
+                diagram.Assets = assets;
                 diagrams.Add(diagram);
-                this._tmAllData.diagrams = diagrams;
+                this._tmAllData.Diagrams = diagrams;
             }
         }
 
@@ -173,21 +173,21 @@ namespace TMFileParser
                 case "all":
                     return this._tmAllData;
                 case "threats":
-                    return this._tmAllData.threats;
+                    return this._tmAllData.Threats;
                 case "boundaries":
-                    return this._tmAllData.diagrams.Select(x => new { 
-                        x.diagram,
-                        x.boundaries
+                    return this._tmAllData.Diagrams.Select(x => new { 
+                        x.Diagram,
+                        x.Boundaries
                     });             
                 case "connectors":
-                    return this._tmAllData.diagrams.Select(x => new {
-                        x.diagram,
-                        x.connectors
+                    return this._tmAllData.Diagrams.Select(x => new {
+                        x.Diagram,
+                        x.Connectors
                     });
                 case "assets":
-                    return this._tmAllData.diagrams.Select(x => new {
-                        x.diagram,
-                        x.assets
+                    return this._tmAllData.Diagrams.Select(x => new {
+                        x.Diagram,
+                        x.Assets
                     });
                 default:
                     throw new InvalidDataException("Invalid Get Operation:" + category);

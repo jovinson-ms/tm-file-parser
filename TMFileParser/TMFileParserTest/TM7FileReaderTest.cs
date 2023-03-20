@@ -27,7 +27,7 @@ namespace TMFileParserTest
         {
             reader = new TM7FileReader(new FileInfo(tm7FilePath));
             var tmData = (TM7All)reader.GetData("all");
-            Assert.AreEqual(tmData.diagrams.FirstOrDefault().assets.FirstOrDefault().DisplayName, "Azure Cosmos DB");
+            Assert.AreEqual(tmData.Diagrams.FirstOrDefault().Assets.FirstOrDefault().DisplayName, "Azure Cosmos DB");
         }
 
         [TestMethod]
@@ -35,10 +35,10 @@ namespace TMFileParserTest
         {
             reader = new TM7FileReader(new FileInfo(tm7EmptyFilePath));
             var tmData = (TM7All)reader.GetData("all");
-            Assert.AreEqual(tmData.diagrams.FirstOrDefault().assets.Count(), 0);
-            Assert.AreEqual(tmData.diagrams.FirstOrDefault().boundaries.Count(), 0);
-            Assert.AreEqual(tmData.diagrams.FirstOrDefault().connectors.Count(), 0);
-            Assert.AreEqual(tmData.threats.Count(), 0);
+            Assert.AreEqual(tmData.Diagrams.FirstOrDefault().Assets.Count(), 0);
+            Assert.AreEqual(tmData.Diagrams.FirstOrDefault().Boundaries.Count(), 0);
+            Assert.AreEqual(tmData.Diagrams.FirstOrDefault().Connectors.Count(), 0);
+            Assert.AreEqual(tmData.Threats.Count(), 0);
         }
 
         [TestMethod]
@@ -46,8 +46,8 @@ namespace TMFileParserTest
         {
             reader = new TM7FileReader(new FileInfo(tm7NoDiagramFilePath));
             var tmData = (TM7All)reader.GetData("all");
-            Assert.AreEqual(tmData.diagrams, null);
-            Assert.AreEqual(tmData.threats.Count(), 0);
+            Assert.AreEqual(tmData.Diagrams, null);
+            Assert.AreEqual(tmData.Threats.Count(), 0);
         }
 
         [TestMethod]

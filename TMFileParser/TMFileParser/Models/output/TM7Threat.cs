@@ -1,24 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TMFileParser.Models.output
 {
     [ExcludeFromCodeCoverage]
     public class TM7Threat
     {
-        public string id { get; set; }
-        public string diagram { get; set; }
-        public string changedBy { get; set; }
-        public DateTime lastModified { get; set; }
-        public string title { get; set; }
-        public string category { get; set; }
-        public string description { get; set; }
-        public string justifications { get; set; }
-        public string interaction { get; set; }
-        public string priority { get; set; }
+        public string Id { get; set; }
+        public string Diagram { get; set; }
+        public string ChangedBy { get; set; }
+        public DateTime LastModified { get; set; }
+        public string Title { get; set; }
+        public string Category { get; set; }
+        public string Description { get; set; }
+        public string Justifications { get; set; }
+        public string Interaction { get; set; }
+        public string Priority { get; set; }
     }
 }
