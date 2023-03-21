@@ -7,7 +7,7 @@ namespace TMFileConverter
 {
     internal class ImageRenderer
     {
-        private const float ScaleConstant = 2;
+        private const float ScaleConstant = 1.5F;
         private const int ImageWidth = 2000;
         private const int ImageHeight = 2200;
 
@@ -108,7 +108,23 @@ namespace TMFileConverter
                 
                 var points = CalculateBezierPoints(scaledConnector); 
                 graphics.DrawCurve(connectorPen, points);
-                graphics.DrawString(scaledConnector.DisplayName, new Font("Arial", 10), new SolidBrush(Color.Black), new PointF(scaledConnector.HandleX, scaledConnector.HandleY));
+
+                var font = new Font(FontFamily.GenericSansSerif, 10, FontStyle.Regular);
+                var height = font.Height + Scale(10);
+                var width = (int)graphics.MeasureString(scaledConnector.DisplayName, font).Width + Scale(10);
+                
+                var boundingRect = new Rectangle(scaledConnector.HandleX - width / 2, scaledConnector.HandleY, width, height);
+                graphics.FillRectangle(new SolidBrush(Color.Honeydew), boundingRect);
+                graphics.DrawRectangle(assetPen, boundingRect);
+                
+                var stringFormat = new StringFormat
+                {
+                    Alignment = StringAlignment.Center,
+                    LineAlignment = StringAlignment.Center,
+                };
+
+                // TODO: make sure this works with multi-line connector names
+                graphics.DrawString(scaledConnector.DisplayName, font, new SolidBrush(Color.Black), boundingRect, stringFormat);
             }
         }
 
