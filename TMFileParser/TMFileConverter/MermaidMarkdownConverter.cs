@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using TMFileParser.Models.output;
 
@@ -18,9 +17,9 @@ namespace TMFileConverter
             
             var result = new StringBuilder();
 
-            foreach (var diagram in data.diagrams)
+            foreach (var diagram in data.Diagrams)
             {
-                result.AppendLine($"# {diagram.diagram}");
+                result.AppendLine($"# {diagram.Diagram}");
                 result.AppendLine(":::mermaid");
                 result = PrintDiagram(result, diagram);
                 result.AppendLine(":::");
@@ -33,12 +32,12 @@ namespace TMFileConverter
         {
             result.AppendLine("flowchart LR");
 
-            var outerBoundary = new TM7Boundary { Id = "root", DisplayName = diagram.diagram, Top = 0, Left = 0, Height = 10000, Width = 10000 };
+            var outerBoundary = new TM7Boundary { Id = "root", DisplayName = diagram.Diagram, Top = 0, Left = 0, Height = 10000, Width = 10000 };
             var rootLevel = new NestedLevel(outerBoundary);
-            var levels = diagram.boundaries.Select(x => new NestedLevel(x)).ToDictionary(x => x.Id);
+            var levels = diagram.Boundaries.Select(x => new NestedLevel(x)).ToDictionary(x => x.Id);
             levels.Add(rootLevel.Id, rootLevel);
 
-            foreach (var asset in diagram.assets)
+            foreach (var asset in diagram.Assets)
             {
                 var parent = levels.Where(x => x.Value.Contains(asset)).OrderBy(x => x.Value.Height * x.Value.Width).FirstOrDefault();
 
@@ -59,7 +58,7 @@ namespace TMFileConverter
 
             result = PrintSubgraphs(result, subgraphs);
 
-            foreach (var connector in diagram.connectors)
+            foreach (var connector in diagram.Connectors)
             {
                 result.AppendLine($"{connector.SourceId}-. \"{connector.DisplayName}\" .-> {connector.TargetId}");
             }

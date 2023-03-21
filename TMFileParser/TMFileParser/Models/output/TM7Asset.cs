@@ -12,5 +12,6 @@ namespace TMFileParser.Models.output
         public decimal Top { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
+        public TM7AssetType Type { get; set; }
     }
 }

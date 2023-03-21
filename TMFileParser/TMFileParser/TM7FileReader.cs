@@ -112,6 +112,10 @@ namespace TMFileParser
                             .Where(x => x.type == "HeaderDisplayAttribute").FirstOrDefault()?.DisplayName;
                         asset.DisplayName = border.value.properties.anyType
                             .Where(x => x.type == "StringDisplayAttribute" && x.DisplayName == "Name").FirstOrDefault()?.value.value;
+                        
+                        Enum.TryParse(border.value.type, out TM7AssetType type);
+                        asset.Type = type;
+
                         assets.Add(asset);
                     }
                 }
@@ -138,6 +142,14 @@ namespace TMFileParser
                             .Where(x => x.type == "HeaderDisplayAttribute").FirstOrDefault()?.DisplayName;
                         connector.DisplayName = line.value.properties.anyType
                             .Where(x => x.type == "StringDisplayAttribute" && x.DisplayName == "Name").FirstOrDefault()?.value.value;
+                        
+                        connector.HandleX = (int)line.value.handleX;
+                        connector.HandleY = (int)line.value.handleY;
+
+                        connector.SourceX = (int)line.value.sourceX;
+                        connector.SourceY = (int)line.value.sourceY;
+                        connector.TargetX = (int)line.value.targetX;
+                        connector.TargetY = (int)line.value.targetY;
                         connectors.Add(connector);
                     }
                     else

@@ -71,39 +71,50 @@ namespace TMFileConverter
                 var parser = new Parser(inputpath);
                 foreach (string category in get)
                 {
-                    var result = parser.GetData(category);
+                    object result = parser.GetData(category);
                     string output, outputFilePath;
                     switch (saveformat)
                     {
                         case "json":
                             output = JsonSerializer.Serialize(result);
                             outputFilePath = Path.Combine(outputpath.FullName, Path.GetFileNameWithoutExtension(inputpath.FullName) + "-" + category + ".json");
+                            SaveToFile(output, outputFilePath);
                             break;
                         case "mermaid":
                             output = MermaidMarkdownConverter.Convert(result);
                             outputFilePath = Path.Combine(outputpath.FullName, Path.GetFileNameWithoutExtension(inputpath.FullName) + "-" + category + ".md");
+                            SaveToFile(output, outputFilePath);
+                            break;
+                        case "png":
+                            outputFilePath = Path.Combine(outputpath.FullName, Path.GetFileNameWithoutExtension(inputpath.FullName));
+                            ImageRenderer.RenderImage(result, outputFilePath);
                             break;
                         default:
                             throw new ArgumentException("Invalid -s/--save-format:" + saveformat);
                     }
 
-                    try
-                    {
-                        File.WriteAllText(outputFilePath, output);
-                    }
-                    catch
-                    {
-                        throw new IOException("Error occured while converting the file.");
-                    }
-
-                    Console.WriteLine();
-                    Console.WriteLine("File saved. Path : " + outputFilePath);
+                    
                 }
             }
             catch (Exception e)
             {
                 PrintError(e.Message);
             }    
+        }
+
+        private static void SaveToFile(string output, string outputFilePath)
+        {
+            try
+            {
+                File.WriteAllText(outputFilePath, output);
+            }
+            catch
+            {
+                throw new IOException("Error occured while converting the file.");
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("File saved. Path : " + outputFilePath);
         }
                   
     }

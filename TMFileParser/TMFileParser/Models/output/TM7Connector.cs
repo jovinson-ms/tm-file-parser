@@ -10,5 +10,13 @@ namespace TMFileParser.Models.output
         public string TargetId { get; set; }
         public string Name { get; set; }
         public string DisplayName { get; set; }
+
+        public int HandleX { get; set; }
+        public int HandleY { get; set; }
+
+        public int SourceX { get; set; }
+        public int SourceY { get; set; }
+        public int TargetX { get; set; }
+        public int TargetY { get; set; }
     }
 }
